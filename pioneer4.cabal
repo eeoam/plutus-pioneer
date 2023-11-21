@@ -1,0 +1,86 @@
+cabal-version:      3.0
+name:               pioneer4
+version:            0.1.0.0
+-- synopsis:
+-- description:
+license:            MIT
+license-file:       LICENSE
+author:             Eric Macaulay
+maintainer:         eric@whetztone.net
+-- copyright:
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+-- extra-source-files:
+
+common common
+    ghc-options: 
+        -Wall -fobject-code -fno-ignore-interface-pragmas 
+        -fno-omit-interface-pragmas
+
+library
+    import:           common
+    exposed-modules:  
+        Pioneer.Util
+        Pioneer.Week02.Gift
+    -- other-modules:
+    hs-source-dirs:   src
+    build-depends:    
+          base ^>=4.14.3.0
+        , bytestring
+        , serialise
+        , cardano-api
+        , cardano-binary
+        , cardano-ledger-core
+        , cardano-node-emulator
+        , plutus-contract
+        , plutus-core
+        , plutus-ledger
+        , plutus-ledger-api
+        , plutus-script-utils
+        , plutus-tx
+        , plutus-tx-constraints
+        , plutus-tx-plugin
+    default-extensions:
+          DataKinds
+        , DeriveAnyClass
+        , DeriveGeneric
+        , FlexibleInstances
+        , ImportQualifiedPost
+        , InstanceSigs
+        , LambdaCase
+        , MultiParamTypeClasses
+        , NumericUnderscores
+        , OverloadedStrings
+        , RecordWildCards
+        , ScopedTypeVariables
+        , TemplateHaskell
+        , TypeApplications
+        , TypeFamilies
+    -- other-extensions:
+    
+    
+    default-language: Haskell2010
+
+executable myProject
+    import:           common
+    main-is:          Main.hs
+    -- other-modules:
+    -- other-extensions:
+    build-depends:
+        base ^>=4.14.3.0,
+        pioneer4
+
+    hs-source-dirs:   app
+    default-language: Haskell2010
+
+test-suite myProject-test
+    import:           common
+    default-language: Haskell2010
+    -- other-modules:
+    -- other-extensions:
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   test
+    main-is:          Main.hs
+    build-depends:
+        base ^>=4.14.3.0,
+        pioneer4
