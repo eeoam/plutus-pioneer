@@ -13,6 +13,7 @@ import Plutus.V2.Ledger.Api
 import Pioneer.Util
 
 -- | This validator always succeeds.
+{-# INLINABLE script #-}
 script :: BuiltinData -> BuiltinData -> BuiltinData -> ()
 script _ _ _ = ()
 

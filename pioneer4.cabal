@@ -22,6 +22,8 @@ library
     exposed-modules:  
         Pioneer.Util
         Pioneer.Week02.Gift
+        Pioneer.Week02.Burn
+        Pioneer.Week02.FortyTwo
     -- other-modules:
     hs-source-dirs:   src
     build-depends:    
