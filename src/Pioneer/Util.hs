@@ -50,8 +50,8 @@ serializableToScript = PlutusScriptSerialised . BSS.toShort . BSL.toStrict . ser
 -- Copyright (c) 2023 Ian Burzynski
 {-# INLINABLE mkUntypedScript #-}
 mkUntypedScript :: ( UnsafeFromData a, UnsafeFromData b)
-                   => (a -> b -> PlutusV2.ScriptContext -> Bool)
-                   -> (BuiltinData -> BuiltinData -> BuiltinData -> ())
+                => (a -> b -> PlutusV2.ScriptContext -> Bool)
+                -> (BuiltinData -> BuiltinData -> BuiltinData -> ())
 mkUntypedScript f a b ctx =
     check $
         f

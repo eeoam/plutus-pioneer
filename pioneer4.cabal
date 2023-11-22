@@ -25,6 +25,8 @@ library
         Pioneer.Week02.Burn
         Pioneer.Week02.FortyTwo
         Pioneer.Week02.FortyTwoTyped
+        Pioneer.Week02.CustomTypes
+        Pioneer.Week02.Homework1
     -- other-modules:
     hs-source-dirs:   src
     build-depends:    
