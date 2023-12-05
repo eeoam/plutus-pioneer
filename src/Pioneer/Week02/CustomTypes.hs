@@ -9,16 +9,17 @@ import PlutusTx
 import PlutusTx qualified
 
 import PlutusTx.Prelude
-    ( traceError, traceIfFalse
-    , otherwise
+    ( --traceError, 
+      traceIfFalse
+    --, otherwise
     , (==)
     , Bool
     , Integer
-    , ($)
+    --, ($)
     )
 
 import PlutusTx.Builtins
-    ( mkI
+    ( --mkI
     )
 
 import Plutus.V2.Ledger.Api

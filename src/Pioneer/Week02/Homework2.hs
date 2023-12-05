@@ -1,18 +1,22 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 
-module Pioneer.Week02.Homework1 where
+module Pioneer.Week02.Homework2 where
 
 import PlutusTx 
     ( BuiltinData
     , compile
     )
---import PlutusTx qualified
+import PlutusTx qualified
 
 import PlutusTx.Prelude
-    ( --traceError, traceIfFalse
+    ( 
+    --  traceError, 
+    --  traceIfFalse
     --, otherwise
     --, (==), 
-    Bool, (&&)
+      (/=)
+    , Bool
+    --, (&&)
     --, Integer
     --, ($)
     )
@@ -31,13 +35,20 @@ import Pioneer.Util
 
 --import Prelude (IO)
 
+data MyRedeemer = MyRedeemer
+    { flag1 :: Bool
+    , flag2 :: Bool
+    }
+PlutusTx.unstableMakeIsData ''MyRedeemer
+
+
 {-# INLINABLE script #-}
--- | This should validate if and only if the two booleans in the redeemer are True!
-script :: () -> (Bool, Bool) -> ScriptContext -> Bool
-script _ (a,b) _ = a && b
+-- | A validator that unlocks the funds if My Redeemer's flags are different
+script :: () -> MyRedeemer -> ScriptContext -> Bool
+script () myRedeemer _ = flag1 myRedeemer /= flag2 myRedeemer
 
 uscript :: BuiltinData -> BuiltinData -> BuiltinData -> ()
 uscript = mkUntypedScript script
 
 validator :: Validator
-validator = mkValidatorScript $$(compile [|| uscript ||])
+validator = mkValidatorScript $$(compile[||uscript||])

@@ -20,6 +20,7 @@ common common
 library
     import:           common
     exposed-modules:  
+        Pioneer.Plutus
         Pioneer.Util
         Pioneer.Week02.Gift
         Pioneer.Week02.Burn
@@ -27,12 +28,21 @@ library
         Pioneer.Week02.FortyTwoTyped
         Pioneer.Week02.CustomTypes
         Pioneer.Week02.Homework1
+        Pioneer.Week02.Homework2
+        Pioneer.Week03.Vesting
+        Pioneer.Week03.ParameterizedVesting
+        Pioneer.Week03.Homework1
+        Pioneer.Week03.Homework2
+        
     -- other-modules:
     hs-source-dirs:   src
     build-depends:    
           base ^>=4.14.3.0
         , bytestring
+        , text
+        , time
         , serialise
+        , aeson
         , cardano-api
         , cardano-binary
         , cardano-ledger-core
@@ -65,27 +75,3 @@ library
     
     
     default-language: Haskell2010
-
-executable myProject
-    import:           common
-    main-is:          Main.hs
-    -- other-modules:
-    -- other-extensions:
-    build-depends:
-        base ^>=4.14.3.0,
-        pioneer4
-
-    hs-source-dirs:   app
-    default-language: Haskell2010
-
-test-suite myProject-test
-    import:           common
-    default-language: Haskell2010
-    -- other-modules:
-    -- other-extensions:
-    type:             exitcode-stdio-1.0
-    hs-source-dirs:   test
-    main-is:          Main.hs
-    build-depends:
-        base ^>=4.14.3.0,
-        pioneer4

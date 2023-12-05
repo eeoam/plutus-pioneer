@@ -8,8 +8,9 @@ import PlutusTx
     )
 
 import PlutusTx.Prelude
-    ( traceError, traceIfFalse
-    , otherwise
+    ( --traceError, 
+      traceIfFalse
+    --, otherwise
     , (==)
     , Bool
     , Integer
@@ -17,7 +18,7 @@ import PlutusTx.Prelude
     )
 
 import PlutusTx.Builtins
-    ( mkI
+    ( --mkI
     )
 
 import Plutus.V2.Ledger.Api
