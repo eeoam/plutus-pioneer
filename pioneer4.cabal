@@ -33,12 +33,18 @@ library
         Pioneer.Week03.ParameterizedVesting
         Pioneer.Week03.Homework1
         Pioneer.Week03.Homework2
-        
+        Pioneer.Week05.Free
+        Pioneer.Week05.Signed
+        Pioneer.Week05.NFT 
+        Pioneer.Week05.Homework1
+        Pioneer.Week05.Homework2
+
     -- other-modules:
     hs-source-dirs:   src
     build-depends:    
           base ^>=4.14.3.0
         , bytestring
+        , base16-bytestring
         , text
         , time
         , serialise
