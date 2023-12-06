@@ -9,30 +9,54 @@ import PlutusTx
 import PlutusTx qualified
 
 import PlutusTx.Prelude
-    ( traceError, traceIfFalse
-    , otherwise
-    , (==)
+    ( --traceError, 
+      traceIfFalse
+    --, otherwise
+    --, (==)
     , Bool, (&&)
-    , Integer
+    --, Integer
     , ($)
     )
 
 import PlutusTx.Builtins
-    ( mkI
+    ( --mkI
     )
 
 import Plutus.V2.Ledger.Api
     ( Validator
     , mkValidatorScript
     , ScriptContext(..)
+    , TxInfo
+    , POSIXTime
+    , from
+    --, to
+    , txInfoValidRange
+    , PubKeyHash
+    )
+
+import Plutus.V2.Ledger.Contexts
+        ( txSignedBy
+        )
+
+import Ledger
+    ( contains
     )
 
 import Pioneer.Util 
-    ( mkUntypedScript
+    ( Network (..)
+    , mkUntypedScript
     , writeValidatorToFile
+    , validatorAddressBech32
+    , posixTimeFromIso8601
+    , printDataToJSON
     )
 
-import Prelude (IO)
+import Prelude 
+    ( IO
+    , String
+    )
+
+import Data.Maybe (fromJust)
 
 
 data VestingDatum = VestingDatum
@@ -57,7 +81,7 @@ script dat () ctx =
     deadlineReached = contains (from $ deadline dat) $ txInfoValidRange info
 
 {-# INLINABLE uscript #-}
-uscript :: BuiltinData -> BuiltinData -> BuiltinData -> Bool
+uscript :: BuiltinData -> BuiltinData -> BuiltinData -> ()
 uscript = mkUntypedScript script
 
 validator :: Validator
@@ -67,3 +91,11 @@ save :: IO ()
 save = writeValidatorToFile "./assets/vesting.plutus" validator
 
 
+addressBech32 :: Network -> String
+addressBech32 network = validatorAddressBech32 network validator
+
+printVestingDatumJSON :: PubKeyHash -> String -> IO ()
+printVestingDatumJSON pkh time = printDataToJSON $ VestingDatum
+    { beneficiary = pkh
+    , deadline    = fromJust $ posixTimeFromIso8601 time
+    }

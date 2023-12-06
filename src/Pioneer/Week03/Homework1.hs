@@ -9,30 +9,48 @@ import PlutusTx
 import PlutusTx qualified
 
 import PlutusTx.Prelude
-    ( traceError, traceIfFalse
-    , otherwise
-    , (==)
+    ( traceIfFalse
+    --, traceError
+    --, otherwise
+    --, (==)
     , Bool, (&&)
-    , Integer
+    , (||)
+    --, Integer
     , ($)
     )
 
 import PlutusTx.Builtins
-    ( mkI
+    ( --mkI
     )
 
 import Plutus.V2.Ledger.Api
     ( Validator
     , mkValidatorScript
     , ScriptContext(..)
+    , TxInfo
+    , POSIXTime
+    , from
+    , to
+    , txInfoValidRange
+    , PubKeyHash
     )
+
+import Plutus.V2.Ledger.Contexts
+    ( txSignedBy
+    )
+
+import Ledger
+    ( contains
+    )
+
+
 
 import Pioneer.Util 
     ( mkUntypedScript
-    , writeValidatorToFile
+    --, writeValidatorToFile
     )
 
-import Prelude (IO)
+--import Prelude (IO)
 
 
 data VestingDatum = VestingDatum
@@ -47,8 +65,9 @@ PlutusTx.unstableMakeIsData ''VestingDatum
 -- | or if the beneficiary2 has signed the transaction and the deadline has passed.
 script :: VestingDatum -> () -> ScriptContext -> Bool
 script dat () ctx =
-    traceIfFalse "beneficiary's signature missing" signedByBeneficiary &&
-    traceIfFalse "deadline not reached" deadlineReached where
+    traceIfFalse "beneficiary1 signature missing or after deadline" (signedByBeneficiary1 && beforeDeadline)
+    ||
+    traceIfFalse "beneficiary2 signature missing or deadline not reached" (signedByBeneficiary2 && deadlineReached) where
 
     info :: TxInfo
     info = scriptContextTxInfo ctx
@@ -66,13 +85,12 @@ script dat () ctx =
     deadlineReached = contains (from $ deadline dat) $ txInfoValidRange info
 
 {-# INLINABLE uscript #-}
-uscript :: BuiltinData -> BuiltinData -> BuiltinData -> Bool
+uscript :: BuiltinData -> BuiltinData -> BuiltinData -> ()
 uscript = mkUntypedScript script
 
 validator :: Validator
 validator = mkValidatorScript $$(compile [|| uscript ||])
 
-save :: IO ()
-save = writeValidatorToFile "./assets/vesting.plutus" validator
+
 
 

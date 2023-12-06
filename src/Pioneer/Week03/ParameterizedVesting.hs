@@ -10,38 +10,68 @@ import PlutusTx
     )
 import PlutusTx qualified
 
-import PlutusTx.Prelude
-    ( traceError, traceIfFalse
-    , otherwise
-    , (==)
-    , Bool, (&&)
-    , Integer
-    , ($)
-    )
 
-import PlutusTx.Builtins
-    ( mkI
-    )
+
 
 import Plutus.V2.Ledger.Api
     ( Validator
     , mkValidatorScript
     , ScriptContext(..)
+    , TxInfo
+    , POSIXTime
+    , from
+    --, to
+    , txInfoValidRange
+    , PubKeyHash
+    )
+
+import PlutusTx.Prelude
+    ( --traceError, 
+      traceIfFalse
+    --, otherwise
+    --, (==)
+    --, 
+    , Bool
+    , (&&)
+    --, Integer
+    , ($)
+    , (.)
+    )
+
+import PlutusTx.Builtins
+    ( --mkI
+    )
+
+import Plutus.V2.Ledger.Contexts
+        ( txSignedBy
+        )
+
+import Ledger
+    ( contains
     )
 
 import Pioneer.Util 
-    ( mkUntypedScript
+    ( --Network (..)
+    {-,-} mkUntypedScript
     , writeValidatorToFile
+    --, validatorAddressBech32
+    --, posixTimeFromIso8601
+    --, printDataToJSON
     )
 
-import Prelude (IO)
+import Prelude 
+    ( IO
+    --, String
+    )
+
+--import Data.Maybe (fromJust)
 
 
 data VestingParams = VestingParams
     { beneficiary :: PubKeyHash
     , deadline    :: POSIXTime
     }
-PlutusTx.makeLift ''VestingDatum
+PlutusTx.makeLift ''VestingParams
 
 {-# INLINABLE script #-}
 script :: VestingParams -> () -> () -> ScriptContext -> Bool
@@ -53,16 +83,16 @@ script params () () ctx =
     info = scriptContextTxInfo ctx
 
     signedByBeneficiary :: Bool
-    signedByBeneficiary = txSignedBy info $ beneficiary dat
+    signedByBeneficiary = txSignedBy info $ beneficiary params
 
     deadlineReached :: Bool
-    deadlineReached = contains (from $ deadline dat) $ txInfoValidRange info
+    deadlineReached = contains (from $ deadline params) $ txInfoValidRange info
 
 {-# INLINABLE uscript #-}
-uscript :: VestingParams -> BuiltinData -> BuiltinData -> BuiltinData -> Bool
+uscript :: VestingParams -> BuiltinData -> BuiltinData -> BuiltinData -> ()
 uscript = mkUntypedScript . script
 
-validator :: Validator
+validator :: VestingParams -> Validator
 validator params = mkValidatorScript ($$(compile [|| uscript ||]) `applyCode` liftCode params)
 
 save :: VestingParams -> IO ()
