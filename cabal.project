@@ -170,3 +170,10 @@ source-repository-package
       libs/small-steps
       libs/small-steps-test
       libs/non-integral
+
+-- library for unit tests of Plutus scripts 
+-- using plutus pioneer4 fork rather than mlabs 
+source-repository-package
+  type: git
+  location: https://github.com/geniusyield/plutus-simple-model
+  tag: d710c4c5400ff7072fe89c337c1cdd0128dc5d99

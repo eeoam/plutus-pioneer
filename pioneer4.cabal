@@ -38,6 +38,11 @@ library
         Pioneer.Week05.NFT 
         Pioneer.Week05.Homework1
         Pioneer.Week05.Homework2
+        -- use melkonian paper to extend Pioneer.Week06.State
+        Pioneer.Week06.State 
+        Pioneer.Week06.PSM
+        Pioneer.Week06.NegativeRTimed
+        Pioneer.Week06.UTNegativeRTimed
 
     -- other-modules:
     hs-source-dirs:   src
@@ -49,6 +54,11 @@ library
         , time
         , serialise
         , aeson
+        , mtl
+        , plutus-simple-model
+        , QuickCheck
+        , tasty
+        , tasty-quickcheck
         , cardano-api
         , cardano-binary
         , cardano-ledger-core

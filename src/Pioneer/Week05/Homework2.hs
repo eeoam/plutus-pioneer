@@ -38,18 +38,3 @@ cscript = $$(compile [|| uscript ||])
 
 policy :: TxOutRef -> MintingPolicy
 policy oref  = mkMintingPolicyScript $ cscript `applyCode` liftCode oref
-
-{-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-        modified:   pioneer4.cabal
-        modified:   src/Pioneer/Util.hs
-        modified:   src/Pioneer/Week03/Homework2.hs
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-        src/Pioneer/Plutus.hs
-        src/Pioneer/Week05/
--}
