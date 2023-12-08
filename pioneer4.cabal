@@ -43,6 +43,7 @@ library
         Pioneer.Week06.PSM
         Pioneer.Week06.NegativeRTimed
         Pioneer.Week06.UTNegativeRTimed
+        Pioneer.Week06.PTNegativeRTimed
 
     -- other-modules:
     hs-source-dirs:   src
