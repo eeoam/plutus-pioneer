@@ -19,13 +19,14 @@ module Pioneer.Plutus
     , (.)
     , mkI
     , any
+    , return
     , Validator
     , mkValidatorScript
     , ScriptContext(..)
     , TxInfo(txInfoInputs, txInfoMint)
     , TxInInfo (txInInfoOutRef)
     , TxOut (txOutValue)
-    , POSIXTime
+    , POSIXTime (POSIXTime, getPOSIXTime)
     , from
     , to
     , contains
@@ -64,6 +65,7 @@ import PlutusTx.Prelude
     , ($)
     , (.)
     , any
+    , return
     )
 
 import PlutusTx.Builtins
@@ -80,7 +82,7 @@ import Plutus.V2.Ledger.Api
     , ScriptContext(..)
     , TxInfo(txInfoInputs, txInfoMint)
     , TxInInfo (txInInfoOutRef)
-    , POSIXTime
+    , POSIXTime (POSIXTime, getPOSIXTime)
     , from
     , to
     , txInfoValidRange
