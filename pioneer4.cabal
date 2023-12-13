@@ -46,6 +46,7 @@ library
         Pioneer.Week06.ExploitableSwap
         Pioneer.Week06.TExploitableSwap
         Pioneer.Week06.PatchedSwap
+        Pioneer.Week09.Oracle
 
     -- other-modules:
     hs-source-dirs:   src
