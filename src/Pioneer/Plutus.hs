@@ -1,7 +1,8 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 
 module Pioneer.Plutus 
-    ( BuiltinData
+    ( -- PlutusTx
+      BuiltinData
     , unsafeFromBuiltinData
     , toBuiltinData
     , unstableMakeIsData
@@ -9,6 +10,7 @@ module Pioneer.Plutus
     , compile
     , applyCode
     , liftCode
+    -- PlutusTx.Prelude
     , traceIfFalse
     , traceError
     , otherwise
@@ -17,35 +19,47 @@ module Pioneer.Plutus
     , Integer
     , ($)
     , (.)
-    , mkI
     , any
     , return
+    , filter
+    -- PlutusTx.Builtins
+    , mkI
+    -- PlutusTx.Builtins.Internal
+    , BuiltinByteString (BuiltinByteString)
+    -- Plutus.V2.Ledger.Api
     , Validator
     , mkValidatorScript
     , ScriptContext(..)
     , TxInfo(txInfoInputs, txInfoMint)
     , TxInInfo (txInInfoOutRef)
-    , TxOut (txOutValue)
     , POSIXTime (POSIXTime, getPOSIXTime)
     , from
     , to
-    , contains
     , txInfoValidRange
-    , txSignedBy
-    , valuePaidTo
     , PubKeyHash
     , MintingPolicy
     , mkMintingPolicyScript
-    , CurrencySymbol
+    , CurrencySymbol (..)
     , TokenName (TokenName, unTokenName)
     , TxOutRef (TxOutRef, txOutRefId, txOutRefIdx)
     , TxId (TxId, getTxId)
+    , TxOut (txOutValue, txOutAddress)
     , Value
-    , flattenValue
     , adaSymbol
     , adaToken
     , singleton
-    , BuiltinByteString (BuiltinByteString)
+    , Credential (ScriptCredential)
+    , Address (addressCredential)
+    -- Plutus.V1.Ledger.Value 
+    , flattenValue
+    -- Plutus.V2.Ledger.Contexts
+    , txSignedBy
+    , valuePaidTo
+    , TxInInfo
+    , txInInfoResolved
+    , ownHash
+    -- Ledger
+    , contains
     ) where
 
 import PlutusTx 
@@ -70,6 +84,7 @@ import PlutusTx.Prelude
     , (.)
     , any
     , return
+    , filter
     )
 
 import PlutusTx.Builtins
@@ -97,11 +112,13 @@ import Plutus.V2.Ledger.Api
     , TokenName (TokenName, unTokenName)
     , TxOutRef (TxOutRef, txOutRefId, txOutRefIdx)
     , TxId (TxId, getTxId)
-    , TxOut (txOutValue)
+    , TxOut (txOutValue, txOutAddress)
     , Value
     , adaSymbol
     , adaToken
     , singleton
+    , Credential (ScriptCredential)
+    , Address (addressCredential)
     )
 
 import Plutus.V1.Ledger.Value 
@@ -111,6 +128,9 @@ import Plutus.V1.Ledger.Value
 import Plutus.V2.Ledger.Contexts
     ( txSignedBy
     , valuePaidTo
+    , TxInInfo
+    , txInInfoResolved
+    , ownHash
     )
 
 import Ledger
