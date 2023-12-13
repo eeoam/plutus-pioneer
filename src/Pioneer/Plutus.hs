@@ -32,6 +32,7 @@ module Pioneer.Plutus
     , contains
     , txInfoValidRange
     , txSignedBy
+    , valuePaidTo
     , PubKeyHash
     , MintingPolicy
     , mkMintingPolicyScript
@@ -41,6 +42,9 @@ module Pioneer.Plutus
     , TxId (TxId, getTxId)
     , Value
     , flattenValue
+    , adaSymbol
+    , adaToken
+    , singleton
     , BuiltinByteString (BuiltinByteString)
     ) where
 
@@ -95,6 +99,9 @@ import Plutus.V2.Ledger.Api
     , TxId (TxId, getTxId)
     , TxOut (txOutValue)
     , Value
+    , adaSymbol
+    , adaToken
+    , singleton
     )
 
 import Plutus.V1.Ledger.Value 
@@ -103,6 +110,7 @@ import Plutus.V1.Ledger.Value
 
 import Plutus.V2.Ledger.Contexts
     ( txSignedBy
+    , valuePaidTo
     )
 
 import Ledger
