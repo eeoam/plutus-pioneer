@@ -44,7 +44,7 @@ library
         Pioneer.Week06.UTNegativeRTimed
         Pioneer.Week06.PTNegativeRTimed
         Pioneer.Week06.ExploitableSwap
-        --Pioneer.Week06.TExploitableSwap
+        Pioneer.Week06.TExploitableSwap
 
     -- other-modules:
     hs-source-dirs:   src
